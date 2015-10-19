@@ -36,7 +36,10 @@ public class AuthenticationActivity extends AppCompatActivity {
                         new FoursquareOauthUriHelper(url);
                 if(uriHelper.isAuthorized()){
                     String accessToken = uriHelper.getAccessToken();
+                    TokenStore tokenStore = new TokenStore(AuthenticationActivity.this);
+                    tokenStore.setAccessToken(accessToken);
                 }
+                finish();
             }
             return true;
         }

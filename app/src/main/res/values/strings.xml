@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">NetworkArchitecture</string>
+    <string name="app_name">Network Architecture</string>
     <string name="action_settings">Settings</string>
+    <string name="menu_sign_in">Sign In</string>
+    <string name="menu_sign_out">Sign Out</string>
+    <string name="check_in_button">Check-in</string>
+    <string name="successful_checkin_message">Successfully checked in!</string>
+
 </resources>
