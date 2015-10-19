@@ -1,6 +1,7 @@
 package com.caine.allan.networkarchitecture;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -22,6 +23,8 @@ import retrofit.converter.GsonConverter;
 public class DataManager {
     private static final String TAG = "DataManager";
     private static final String FOURSQUARE_ENDPOINT = "https://api.foursquare.com/v2";
+    private static final String OAUTH_ENPOINT = "https://foursquare.com/oauth2/authenticate";
+    public static final String OAUTH_REDIRECT_URI = "http://www.bignerdranch.com";
 
     private static final String CLIENT_ID = "S1RJ2URPTNSFRIH0R3MPYBRSWKYQQ0SRAVDRJGBUTTYQWKYW";
     private static final String CLIENT_SECRET = "LBSJ52A04D1IGN1KEBRANZSW4PRRYF51HFTALP0G3YXAHI0O";
@@ -55,6 +58,15 @@ public class DataManager {
     protected DataManager(RestAdapter basicRestAdapter){
         mBasicRestAdapter = basicRestAdapter;
         mSearchListeners = new ArrayList<>();
+    }
+
+    public String getAuthenticationUrl(){
+        return Uri.parse(OAUTH_ENPOINT).buildUpon()
+                .appendQueryParameter("client_id", CLIENT_ID)
+                .appendQueryParameter("response_type", "token")
+                .appendQueryParameter("redirect_uri", OAUTH_REDIRECT_URI)
+                .build()
+                .toString();
     }
 
     public static RequestInterceptor sRequestInterceptor = new RequestInterceptor() {
