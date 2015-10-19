@@ -99,7 +99,7 @@ public class DataManager {
 
     public Venue getVenue(String venueId){
         for(Venue v : mVenueList){
-            if(v.equals(venueId)){
+            if(v.getId().equals(venueId)){
                 return  v;
             }
         }

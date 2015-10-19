@@ -17,6 +17,7 @@ public class VenueDetailFragment extends Fragment {
     private static final String ARG_VENUE_ID = "VenueDetailFragment.VenueId";
 
     private DataManager mDataManager;
+    private TokenStore mTokenStore;
     private String mVenueId;
     private Venue mVenue;
 
@@ -40,6 +41,7 @@ public class VenueDetailFragment extends Fragment {
         mVenueNameTextView = (TextView)view.findViewById(R.id.fragment_venue_VenueNameTextView);
         mVenueAddressTextView = (TextView)view.findViewById(R.id.fragment_venue_VenueAddressTextView);
         mCheckInButton = (Button)view.findViewById(R.id.fragment_venue_VenueCheckInButton);
+        mTokenStore = new TokenStore(getActivity());
         return view;
     }
 
@@ -56,5 +58,8 @@ public class VenueDetailFragment extends Fragment {
         super.onResume();
         mVenueNameTextView.setText(mVenue.getName());
         mVenueAddressTextView.setText(mVenue.getFormattedAddress());
+        if(mTokenStore.getAccessToken() != null){
+            mCheckInButton.setVisibility(View.VISIBLE);
+        }
     }
 }
