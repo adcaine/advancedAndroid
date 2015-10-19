@@ -32,7 +32,7 @@ public class DataManager {
     private List<Venue> mVenueList;
 
     private static DataManager sDataManager;
-    private RestAdapter mBasicResAdapter;
+    private RestAdapter mBasicRestAdapter;
 
     private List<VenueSearchListener> mSearchListeners;
 
@@ -52,8 +52,8 @@ public class DataManager {
         return sDataManager;
     }
 
-    protected DataManager(RestAdapter basicResAdapter){
-        mBasicResAdapter = basicResAdapter;
+    protected DataManager(RestAdapter basicRestAdapter){
+        mBasicRestAdapter = basicRestAdapter;
         mSearchListeners = new ArrayList<>();
     }
 
@@ -68,7 +68,7 @@ public class DataManager {
     };
 
     public void fetchVenueSearch() {
-        VenueInterface venueInterface = mBasicResAdapter
+        VenueInterface venueInterface = mBasicRestAdapter
                 .create(VenueInterface.class);
 
         venueInterface.venueSearch(TEST_LAT_LONG, new Callback<VenueSearchResponse>() {
