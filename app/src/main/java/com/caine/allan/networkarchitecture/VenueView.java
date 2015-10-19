@@ -34,11 +34,11 @@ public class VenueView extends LinearLayout{
         mAddressTextView = (TextView)view.findViewById(R.id.view_venue_list_VenueLocationTextView);
     }
 
-    public void setTitleTextView(TextView titleTextView) {
-        mTitleTextView = titleTextView;
+    public void setTitle(String titleTextView) {
+        mTitleTextView.setText(titleTextView);
     }
 
-    public void setAddressTextView(TextView addressTextView) {
-        mAddressTextView = addressTextView;
+    public void setAddress(String addressTextView) {
+        mAddressTextView.setText(addressTextView);
     }
 }

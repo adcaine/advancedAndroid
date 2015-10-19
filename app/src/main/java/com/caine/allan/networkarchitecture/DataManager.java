@@ -21,7 +21,7 @@ import retrofit.converter.GsonConverter;
  */
 public class DataManager {
     private static final String TAG = "DataManager";
-    private static final String FOURSQUARE_ENDPOINT = "https://api/foursquare.com/v2";
+    private static final String FOURSQUARE_ENDPOINT = "https://api.foursquare.com/v2";
 
     private static final String CLIENT_ID = "S1RJ2URPTNSFRIH0R3MPYBRSWKYQQ0SRAVDRJGBUTTYQWKYW";
     private static final String CLIENT_SECRET = "LBSJ52A04D1IGN1KEBRANZSW4PRRYF51HFTALP0G3YXAHI0O";
@@ -75,6 +75,7 @@ public class DataManager {
             @Override
             public void success(VenueSearchResponse venueSearchResponse, Response response) {
                 mVenueList = venueSearchResponse.getVenueList();
+                notifySearchListeners();
             }
 
             @Override

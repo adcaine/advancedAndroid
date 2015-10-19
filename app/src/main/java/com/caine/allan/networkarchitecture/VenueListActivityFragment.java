@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -18,6 +19,7 @@ public class VenueListActivityFragment extends Fragment implements VenueSearchLi
     protected DataManager mDataManager;
     private List<Venue> mVenueList;
     private RecyclerView mRecyclerView;
+    private VenueListAdapter mVenueListAdapter;
 
     public VenueListActivityFragment() {
     }
@@ -29,6 +31,8 @@ public class VenueListActivityFragment extends Fragment implements VenueSearchLi
         mRecyclerView = (RecyclerView)view.findViewById(R.id.venueListRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
+        mVenueListAdapter = new VenueListAdapter(getActivity(), Collections.EMPTY_LIST);
+        mRecyclerView.setAdapter(mVenueListAdapter);
         return view;
     }
 
@@ -49,5 +53,6 @@ public class VenueListActivityFragment extends Fragment implements VenueSearchLi
     @Override
     public void onVenueSearchFinished() {
         mVenueList = mDataManager.getVenueList();
+        mVenueListAdapter.setVenueList(mVenueList);
     }
 }
