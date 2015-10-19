@@ -14,4 +14,14 @@ public class Venue {
     @SerializedName("verified") private boolean mVerified;
     @SerializedName("location") private Location mLocation;
     @SerializedName("categories") private List<Category> mCategory;
+
+    public String getName(){
+        return mName;
+    }
+
+    public String getFormattedAddress() {
+        return mLocation.getFormattedAddress();
+    }
+
+
 }

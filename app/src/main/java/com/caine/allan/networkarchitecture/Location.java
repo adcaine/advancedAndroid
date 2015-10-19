@@ -12,4 +12,15 @@ public class Location {
     @SerializedName("lng") private double mLongitude;
     @SerializedName("formattedAddress") private List<String> mFormattedAddress;
 
+    public String getFormattedAddress(){
+        String formattedAddress = "";
+        for(String addressPart : mFormattedAddress){
+            formattedAddress += addressPart;
+            if(mFormattedAddress.indexOf(addressPart) != (mFormattedAddress.size() - 1)){
+                formattedAddress += " ";
+            }
+        }
+        return formattedAddress;
+    }
+
 }
