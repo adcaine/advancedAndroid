@@ -1,9 +1,13 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.views;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.caine.allan.networkarchitecture.VenueDetailActivity;
+import com.caine.allan.networkarchitecture.models.Venue;
+import com.caine.allan.networkarchitecture.views.VenueView;
 
 /**
  * Created by allancaine on 2015-10-19.

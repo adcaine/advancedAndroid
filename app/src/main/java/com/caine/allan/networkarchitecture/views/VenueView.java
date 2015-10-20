@@ -1,12 +1,13 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.views;
 
 import android.content.Context;
-import android.text.Layout;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.caine.allan.networkarchitecture.R;
 
 /**
  * Created by allancaine on 2015-10-19.

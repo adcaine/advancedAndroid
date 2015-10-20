@@ -12,6 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.caine.allan.networkarchitecture.listeners.VenueSearchListener;
+import com.caine.allan.networkarchitecture.models.Venue;
+import com.caine.allan.networkarchitecture.views.VenueListAdapter;
+import com.caine.allan.networkarchitecture.web.DataManager;
+
 import java.util.Collections;
 import java.util.List;
 

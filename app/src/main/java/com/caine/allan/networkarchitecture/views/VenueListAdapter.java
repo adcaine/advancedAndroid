@@ -1,8 +1,10 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.views;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import com.caine.allan.networkarchitecture.models.Venue;
 
 import java.util.List;
 

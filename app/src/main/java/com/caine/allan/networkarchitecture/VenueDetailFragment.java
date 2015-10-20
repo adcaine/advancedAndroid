@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caine.allan.networkarchitecture.listeners.VenueCheckInListener;
+import com.caine.allan.networkarchitecture.models.Venue;
+import com.caine.allan.networkarchitecture.web.DataManager;
+
 /**
  * Created by allancaine on 2015-10-19.
  */

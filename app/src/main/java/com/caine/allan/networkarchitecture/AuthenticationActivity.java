@@ -6,6 +6,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.caine.allan.networkarchitecture.web.DataManager;
+
 /**
  * Created by allancaine on 2015-10-19.
  */

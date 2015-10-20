@@ -1,5 +1,6 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.models;
 
+import com.caine.allan.networkarchitecture.models.Venue;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

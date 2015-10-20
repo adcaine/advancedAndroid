@@ -1,5 +1,6 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.web;
 
+import com.caine.allan.networkarchitecture.models.VenueSearchResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

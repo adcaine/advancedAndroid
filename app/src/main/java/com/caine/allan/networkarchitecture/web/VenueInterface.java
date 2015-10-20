@@ -1,4 +1,6 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.web;
+
+import com.caine.allan.networkarchitecture.models.VenueSearchResponse;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;

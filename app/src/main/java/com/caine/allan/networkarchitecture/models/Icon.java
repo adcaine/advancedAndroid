@@ -1,4 +1,4 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.models;
 
 import com.google.gson.annotations.SerializedName;
 

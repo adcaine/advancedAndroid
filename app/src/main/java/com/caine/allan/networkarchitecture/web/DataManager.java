@@ -1,10 +1,16 @@
-package com.caine.allan.networkarchitecture;
+package com.caine.allan.networkarchitecture.web;
 
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.caine.allan.networkarchitecture.R;
+import com.caine.allan.networkarchitecture.TokenStore;
+import com.caine.allan.networkarchitecture.listeners.VenueCheckInListener;
+import com.caine.allan.networkarchitecture.listeners.VenueSearchListener;
+import com.caine.allan.networkarchitecture.models.Venue;
+import com.caine.allan.networkarchitecture.models.VenueSearchResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
