@@ -35,7 +35,7 @@ public class DataManager {
     public static final String OAUTH_REDIRECT_URI = "http://www.bignerdranch.com";
 
     private static final String CLIENT_ID = "S1RJ2URPTNSFRIH0R3MPYBRSWKYQQ0SRAVDRJGBUTTYQWKYW";
-    private static final String CLIENT_SECRET = "LBSJ52A04D1IGN1KEBRANZSW4PRRYF51HFTALP0G3YXAHI0O";
+    private static final String CLIENT_SECRET = "T1MACDS2LRYXBVNEP2ZKHTZWEB5S1DMS41MZ2MDRGJPMLYEE";
     private static final String FOURSQUARE_VERSION = "20150406";
     private static final String FOURSQUARE_MODE = "foursquare";
     private static final String SWARM_MODE = "swarm";
@@ -127,6 +127,7 @@ public class DataManager {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(TAG, "Failed to fetch venue search", error);
+                notifiyCheckInListenersTokenExpired();
             }
         });
     }
@@ -143,8 +144,9 @@ public class DataManager {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(TAG, "Failed to check in to venue,", error);
-                if(error.getCause() instanceof UnauthorizedException){
+                if (error.getCause() instanceof UnauthorizedException) {
                     sTokenStore.setAccessToken(null);
+                    notifiyCheckInListenersTokenExpired();
                 }
             }
         });
@@ -188,6 +190,12 @@ public class DataManager {
     private void notifyCheckInListeners(){
         for(VenueCheckInListener listener : mCheckInListeners){
             listener.onVenueCheckInFinished();
+        }
+    }
+
+    private void notifiyCheckInListenersTokenExpired(){
+        for(VenueCheckInListener listener : mCheckInListeners){
+            listener.onTokenExpired();
         }
     }
 }

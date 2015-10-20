@@ -86,4 +86,8 @@ public class VenueDetailFragment extends Fragment implements VenueCheckInListene
         Toast.makeText(getActivity(), R.string.successful_checkin_message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onTokenExpired() {
+        Toast.makeText(getActivity(), "Token invalid, please log in again", Toast.LENGTH_SHORT).show();
+    }
 }
