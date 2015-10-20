@@ -6,5 +6,7 @@
     <string name="check_in_button">Check-in</string>
     <string name="successful_checkin_message">Successfully checked in!</string>
     <string name="usuccessful_checkin_message">Unsuccessful check in</string>
+    <string name="expired_token_dialogtitle">Expired Token</string>
+    <string name="expired_token_dialog_message">Your acces token has expired.  Please reauthenticate with FourSqure</string>
 
 </resources>

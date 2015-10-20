@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.caine.allan.networkarchitecture.controllers.ExpiredTokenDialogFragment;
 import com.caine.allan.networkarchitecture.listeners.VenueCheckInListener;
 import com.caine.allan.networkarchitecture.models.Venue;
 import com.caine.allan.networkarchitecture.web.DataManager;
@@ -20,6 +21,7 @@ import com.caine.allan.networkarchitecture.web.DataManager;
 public class VenueDetailFragment extends Fragment implements VenueCheckInListener {
 
     private static final String ARG_VENUE_ID = "VenueDetailFragment.VenueId";
+    private static final String EXPIRED_DIALOG = "expired_dialog";
 
     private DataManager mDataManager;
     private TokenStore mTokenStore;
@@ -88,6 +90,8 @@ public class VenueDetailFragment extends Fragment implements VenueCheckInListene
 
     @Override
     public void onTokenExpired() {
-        Toast.makeText(getActivity(), "Token invalid, please log in again", Toast.LENGTH_SHORT).show();
+        mCheckInButton.setVisibility(View.GONE);
+        ExpiredTokenDialogFragment dialogFragment = new ExpiredTokenDialogFragment();
+        dialogFragment.show(getFragmentManager(), EXPIRED_DIALOG);
     }
 }
