@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.caine.allan.networkarchitecture.R;
 import com.caine.allan.networkarchitecture.TokenStore;
+import com.caine.allan.networkarchitecture.exceptions.UnauthorizedException;
 import com.caine.allan.networkarchitecture.listeners.VenueCheckInListener;
 import com.caine.allan.networkarchitecture.listeners.VenueSearchListener;
 import com.caine.allan.networkarchitecture.models.Venue;
@@ -67,6 +68,7 @@ public class DataManager {
                     .setConverter(new GsonConverter(gson))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setRequestInterceptor(sAuthenticatedRequestInterceptor)
+                    .setErrorHandler(new RetrofitErrorHandler())
                     .build();
             sDataManager = new DataManager(context.getApplicationContext(), basicRestAdapter, authenticatedRestAdapter);
         }
@@ -141,7 +143,9 @@ public class DataManager {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(TAG, "Failed to check in to venue,", error);
-                Toast.makeText(mContext, R.string.usuccessful_checkin_message, Toast.LENGTH_LONG).show();
+                if(error.getCause() instanceof UnauthorizedException){
+                    sTokenStore.setAccessToken(null);
+                }
             }
         });
     }
