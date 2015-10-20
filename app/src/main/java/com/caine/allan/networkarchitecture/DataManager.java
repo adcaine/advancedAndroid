@@ -3,6 +3,7 @@ package com.caine.allan.networkarchitecture;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,21 +24,26 @@ import retrofit.converter.GsonConverter;
 public class DataManager {
     private static final String TAG = "DataManager";
     private static final String FOURSQUARE_ENDPOINT = "https://api.foursquare.com/v2";
-    private static final String OAUTH_ENPOINT = "https://foursquare.com/oauth2/authenticate";
+    private static final String OAUTH_ENDPOINT = "https://foursquare.com/oauth2/authenticate";
     public static final String OAUTH_REDIRECT_URI = "http://www.bignerdranch.com";
 
     private static final String CLIENT_ID = "S1RJ2URPTNSFRIH0R3MPYBRSWKYQQ0SRAVDRJGBUTTYQWKYW";
     private static final String CLIENT_SECRET = "LBSJ52A04D1IGN1KEBRANZSW4PRRYF51HFTALP0G3YXAHI0O";
     private static final String FOURSQUARE_VERSION = "20150406";
     private static final String FOURSQUARE_MODE = "foursquare";
+    private static final String SWARM_MODE = "swarm";
 
     private static final String TEST_LAT_LONG = "33.759,-84.332";
     private List<Venue> mVenueList;
 
     private static DataManager sDataManager;
+    private Context mContext;
+    private static TokenStore sTokenStore;
     private RestAdapter mBasicRestAdapter;
+    private RestAdapter mAuthenticatedRestAdapter;
 
     private List<VenueSearchListener> mSearchListeners;
+    private List<VenueCheckInListener> mCheckInListeners;
 
     public static DataManager get(Context context){
         if(sDataManager == null){
@@ -50,18 +56,28 @@ public class DataManager {
                     .setLogLevel(RestAdapter.LogLevel.FULL)
                     .setRequestInterceptor(sRequestInterceptor)
                     .build();
-            sDataManager = new DataManager(basicRestAdapter);
+            RestAdapter authenticatedRestAdapter = new RestAdapter.Builder()
+                    .setEndpoint(FOURSQUARE_ENDPOINT)
+                    .setConverter(new GsonConverter(gson))
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setRequestInterceptor(sAuthenticatedRequestInterceptor)
+                    .build();
+            sDataManager = new DataManager(context.getApplicationContext(), basicRestAdapter, authenticatedRestAdapter);
         }
         return sDataManager;
     }
 
-    protected DataManager(RestAdapter basicRestAdapter){
+    protected DataManager(Context context, RestAdapter basicRestAdapter, RestAdapter authenticatedRestAdapter){
+        mContext = context;
+        sTokenStore = new TokenStore(mContext);
         mBasicRestAdapter = basicRestAdapter;
+        mAuthenticatedRestAdapter = authenticatedRestAdapter;
         mSearchListeners = new ArrayList<>();
+        mCheckInListeners = new ArrayList<>();
     }
 
     public String getAuthenticationUrl(){
-        return Uri.parse(OAUTH_ENPOINT).buildUpon()
+        return Uri.parse(OAUTH_ENDPOINT).buildUpon()
                 .appendQueryParameter("client_id", CLIENT_ID)
                 .appendQueryParameter("response_type", "token")
                 .appendQueryParameter("redirect_uri", OAUTH_REDIRECT_URI)
@@ -79,6 +95,16 @@ public class DataManager {
         }
     };
 
+    private static RequestInterceptor sAuthenticatedRequestInterceptor =
+            new RequestInterceptor() {
+                @Override
+                public void intercept(RequestFacade request) {
+                    request.addQueryParam("oauth_token", sTokenStore.getAccessToken());
+                    request.addQueryParam("v", FOURSQUARE_VERSION);
+                    request.addQueryParam("m", SWARM_MODE);
+                }
+            };
+
     public void fetchVenueSearch() {
         VenueInterface venueInterface = mBasicRestAdapter
                 .create(VenueInterface.class);
@@ -93,6 +119,23 @@ public class DataManager {
             @Override
             public void failure(RetrofitError error) {
                 Log.e(TAG, "Failed to fetch venue search", error);
+            }
+        });
+    }
+
+    public void checkInToVenue(String venueId){
+        VenueInterface venueInterface =
+                mAuthenticatedRestAdapter.create(VenueInterface.class);
+        venueInterface.venueCheckIn(venueId, new Callback<Object>() {
+            @Override
+            public void success(Object o, Response response) {
+                notifyCheckInListeners();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e(TAG, "Failed to check in to venue,", error);
+                Toast.makeText(mContext, R.string.usuccessful_checkin_message, Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -124,5 +167,17 @@ public class DataManager {
         }
     }
 
+    public void addVenueCheckInListener(VenueCheckInListener listener){
+        mCheckInListeners.add(listener);
+    }
 
+    public void removeCheckInListener(VenueCheckInListener listener){
+        mCheckInListeners.remove(listener);
+    }
+
+    private void notifyCheckInListeners(){
+        for(VenueCheckInListener listener : mCheckInListeners){
+            listener.onVenueCheckInFinished();
+        }
+    }
 }

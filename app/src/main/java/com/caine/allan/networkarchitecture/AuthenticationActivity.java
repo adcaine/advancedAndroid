@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 /**
  * Created by allancaine on 2015-10-19.
@@ -38,6 +39,9 @@ public class AuthenticationActivity extends AppCompatActivity {
                     String accessToken = uriHelper.getAccessToken();
                     TokenStore tokenStore = new TokenStore(AuthenticationActivity.this);
                     tokenStore.setAccessToken(accessToken);
+                    Toast.makeText(AuthenticationActivity.this, "You were successfully authenticated", Toast.LENGTH_LONG).show();;
+                }else{
+                    Toast.makeText(AuthenticationActivity.this, "You were not authenticated", Toast.LENGTH_LONG).show();
                 }
                 finish();
             }

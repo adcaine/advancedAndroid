@@ -8,11 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by allancaine on 2015-10-19.
  */
-public class VenueDetailFragment extends Fragment {
+public class VenueDetailFragment extends Fragment implements VenueCheckInListener {
 
     private static final String ARG_VENUE_ID = "VenueDetailFragment.VenueId";
 
@@ -41,6 +42,12 @@ public class VenueDetailFragment extends Fragment {
         mVenueNameTextView = (TextView)view.findViewById(R.id.fragment_venue_VenueNameTextView);
         mVenueAddressTextView = (TextView)view.findViewById(R.id.fragment_venue_VenueAddressTextView);
         mCheckInButton = (Button)view.findViewById(R.id.fragment_venue_VenueCheckInButton);
+        mCheckInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDataManager.checkInToVenue(mVenueId);
+            }
+        });
         mTokenStore = new TokenStore(getActivity());
         return view;
     }
@@ -50,7 +57,14 @@ public class VenueDetailFragment extends Fragment {
         super.onStart();
         mVenueId = getArguments().getString(ARG_VENUE_ID);
         mDataManager = DataManager.get(getActivity());
+        mDataManager.addVenueCheckInListener(this);
         mVenue = mDataManager.getVenue(mVenueId);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mDataManager.removeCheckInListener(this);
     }
 
     @Override
@@ -62,4 +76,10 @@ public class VenueDetailFragment extends Fragment {
             mCheckInButton.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onVenueCheckInFinished() {
+        Toast.makeText(getActivity(), R.string.successful_checkin_message, Toast.LENGTH_SHORT).show();
+    }
+
 }

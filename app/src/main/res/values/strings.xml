@@ -5,5 +5,6 @@
     <string name="menu_sign_out">Sign Out</string>
     <string name="check_in_button">Check-in</string>
     <string name="successful_checkin_message">Successfully checked in!</string>
+    <string name="usuccessful_checkin_message">Unsuccessful check in</string>
 
 </resources>

@@ -7,7 +7,7 @@ import android.net.Uri;
  */
 public class FoursquareOauthUriHelper {
 
-    private static final String ACCESS_TOKEN_PARAM = "access_token";
+    private static final String ACCESS_TOKEN_PARAM = "access_token=";
 
     private Uri mOauthUri;
 
